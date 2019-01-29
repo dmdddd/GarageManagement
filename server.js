@@ -19,8 +19,8 @@ app.post('/Login', function(req, res){
     var found = {'success': false, 'message': 'User Name Or Password Not Valid'};
     users.forEach(function(user){
         if (user.name.toLowerCase() === data.name.toLowerCase() && parseInt(user.password) === parseInt(data.password)){
-            found.success = true;
-	    found.message = 'Welcome';
+            //found.success = true;
+	    //found.message = 'Welcome';
 	    res.sendFile(__dirname + '/ex1.html');
         }  
     });
