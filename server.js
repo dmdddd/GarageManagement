@@ -25,6 +25,33 @@ app.post('/Login', function(req, res){
 });
 
 
+app.post('/Users', function(req, res){
+    var data = req.body;
+    var exist = false;
+    users.forEach(function(user){
+        if (user.name.toLowerCase() === data.name.toLowerCase()){
+            exist = true;
+        }  
+    });
+    var msg = 'User ' + data.name + ' ';
+    if (!exist){
+        users.push(data);
+        msg += 'Was Added Successfully';
+    }  
+    else
+        msg += 'Alredy exist In Data Base';
+    res.send({'success': !exist, 'message': msg});
+});
+
+app.get('/Users', function(req, res){
+    var response = 'Data Base Users: ';
+    users.forEach(function(user){
+       response += user.name + ' ';
+    });
+    res.send({'success': true, 'message' : response});
+});
+
+
 
 app.listen(port, () => {
 	console.log('Example app listening on port %d!', port);
