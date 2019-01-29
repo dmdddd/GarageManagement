@@ -18,7 +18,7 @@ app.post('/Login', function(req, res){
         if (user.name.toLowerCase() === data.name.toLowerCase() && parseInt(user.password) === parseInt(data.password)){
             found.success = true;
             found.message = 'Welcome';
-	    res.sendFile(__dirname + '/ex1.html');
+	    //res.sendFile(__dirname + '/ex1.html');
         }  
     });
     res.send(found);
