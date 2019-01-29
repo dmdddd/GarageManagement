@@ -2,6 +2,9 @@ let express = require('express');
 // process.env.PORT Herokus env variable that heroku supplies for the port numer
 let port = process.env.PORT || 3000;
 let app = express();
+app.use(express.json());       // to support JSON-encoded bodies
+app.use(express.urlencoded({extended: true})); // to support URL-encoded bodies
+
 
 var users = [];
 users.push({'name': 'Dan', 'password': 123, 'email': 'dan@ggmail.com'});
