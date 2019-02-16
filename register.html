@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+form {
+  border: 3px solid #f1f1f1;
+  position:fixed;
+  top:10%;
+  left:30%;
+  width: 40%;
+}
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+button , input[type=submit]{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+button:hover {
+  opacity: 0.8;
+}
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+.container {
+  padding: 16px;
+}
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+<form action="/Users" method="post">
+  <div class="imgcontainer">
+    <h1>Register</h1>
+  </div>
+
+  <div class="container">
+    <label for="username"><b>Username</b></label>
+    <input id="username" type="text" placeholder="Enter Username" name="username" required>
+    <span id="error_uname_exists" class="error_msg" style="color:red; display:none;">User name already exists</span></br>
+    <span id="error_no_uname" class="error_msg" style="color:red; display:none;">Please enter a username</span></br>
+    <label for="upassword"><b>Password</b></label>
+    <input id="password" type="password" placeholder="Enter Password" name="upassword" required>
+    <span id="error_no_password" class="error_msg" style="color:red; display:none;">Please enter a password</span></br>
+    <label for="fullname"><b>Full name</b></label>
+    <input id="fullname" type="text" placeholder="Enter Full Name(F.E. Batman)" name="fullname" required>
+    <span id="error_no_name" class="error_msg" style="color:red; display:none;">Please enter a name</span></br>
+    <label for="email"><b>Email</b></label>
+    <input id="email" type="text" placeholder="Enter Email(F.E. iAmBatman@gmail.com)" name="email" required>
+    <span id="error_no_email" class="error_msg" style="color:red; display:none;">Please enter an email</span>
+    <span id="error_incorrect_email_format" class="error_msg" style="color:red; display:none;">Email should look like: John@smith.com</span>
+
+    <input id="register-Btn" type="submit" value="Register"/>    
+  </div>
+</form>
+
+</body>
+</html>
+
+<script>
+    function Register(ev){
+    $('.error_msg').hide();
+    ev.preventDefault();
+    var username = $('#username').val();
+    var password = $('#password').val();
+    var email = $('#email').val();
+    var fullname = $('#fullname').val();
+    if (username == ""){
+      $('#error_no_uname').show();
+    } else if(password == ""){
+      $('#error_no_password').show();
+    } else if(fullname == ""){
+      $('#error_no_name').show();
+    } else if (email == ""){
+      $('#error_no_email').show();
+    } else if(!/^[a-z0-9]+@[a-z0-9]+\.[a-z0-9]+$/.test(email))
+    {
+      $('#error_incorrect_email_format').show();
+    }
+    else{
+      var json = {
+      'username': username,
+      'password': password,
+      'email': email,
+      'name': fullname
+    }
+    var response = $.post('/Register', json);
+    response.done((response) => {
+        if (response.success){
+          alert("A new user has been added.")
+          window.location.replace(response.message);
+        }
+        else{
+          $('#error_uname_exists').show();
+        }
+    });
+    }
+
+
+    // var json = {
+    //   'username': username,
+    //   'password': password,
+    //   'email': email,
+    //   'name': fullname
+    // }
+    // var response = $.post('/Register', json);
+    // response.done((response) => {
+    //     if (response.success){
+    //       alert("A new user has been added.")
+    //       window.location.replace(response.message);
+    //     }
+    //     else{
+    //       $('#error_uname').show();
+    //     }
+    // });
+  }
+
+  $('#register-Btn').on('click', Register);
+   
+</script>

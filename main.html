@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>
+	Garage Inc
+	</title>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<!-- Popper JS -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+		<style>
+			button, input[type=submit]{
+			background-color: #4CAF50;
+			color: white;
+			padding: 14px 20px;
+			margin: 8px 0;
+			border: none;
+			cursor: pointer;
+			}
+			button:hover {
+  				opacity: 0.8;
+			}
+		</style>
+</head>
+<body>
+	<h1 id="welcome_message">Welcome, </h1>
+	<div>
+		<form action="/NewJob" method="get">
+			<input type="submit" value="New Job">
+		</form>
+		<button id="resetDB_btn" onclick="ResetDB()" type="button" style="width:100px; background-color: #0000ff9e;">Reset DB</button>
+		<form action="/LogOut" method="get">
+			<input type="submit" value="Log Out">
+		</form>
+	</div>
+	<div class="container">
+	<table id="table" class="display table table-hover">
+	<thead>
+	<tr>
+		<th>Date</th>
+		<th>Lisence Plate</th>
+		<th>Job Type</th>
+		<th>Cost</th>
+		<th>Action</th>
+	</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th>Date</th>
+			<th>Lisence Plate</th>
+			<th>Job Type</th>
+			<th>Cost</th>
+			<th>Action</th>
+		</tr>
+	</tfoot>
+	</div>
+	
+</body>
+</html>
+
+<script>
+$('#table').DataTable( {
+"columnDefs": [
+    { "orderable": false, "targets": 4 }
+  ]
+  });
+
+	document.addEventListener( "DOMContentLoaded", get_jobs, false );
+	function get_jobs(){
+	var res = $.get('/AllJobs');
+	res.done((res) => {
+		var table = $('#table');
+		$.each(res, function (key, data) {
+			var buttons = '<button type="button" class="btn btn-primary btn-xs my-xs-btn" onclick="editJob(\'' + String(data.id) + '\')">Edit</button> <button type="button" class="rm_btn btn btn-primary btn-xs my-xs-btn" onclick="removeJob(\'' + String(data.id) + '\', this)">Remove</button>';
+			$("table").DataTable().row.add([data.date, data.car_number, data.type, data.cost, buttons, data.id, data.client_name, data.client_phone, data.job_desc]).draw( true );
+		})
+    });
+	}
+
+	function editJob(id){
+		sessionStorage.setItem('job_id', id);
+		window.location.href = "/EditJob"
+
+	}
+	function removeJob(id, row){
+		if (confirm('Are you sure you want to delete this job?')) {
+			var json = {
+      	'id_to_remove': id
+			}
+			var response = $.post('/removeJob', json);
+    	response.done((response) => {
+			  if (response.success == true){
+				$('#table').DataTable().row($(row).parents('tr')).remove().draw();
+				}
+	});
+		} else {
+			return false;
+		}
+	}
+
+
+	$(function() {
+    $("table").click(function(event) {
+        event.stopPropagation();
+        var $target = $(event.target);
+        if ( $target.closest("td").attr("colspan") > 6 ) {
+            $target.slideUp();
+        } else {
+            $target.closest("tr").next().find("form").slideToggle();
+        }                    
+    });
+});
+
+$( document ).ready(function() {
+	$("#welcome_message").append(sessionStorage .getItem("name"));
+	$('#table').DataTable();
+});
+
+
+var detailRows = [];
+
+
+$('#table').on( 'click', 'td', function () {
+        var tr = $(this).closest('tr');
+        var row = $('#table').DataTable().row( tr );
+		var idx = $.inArray( tr.attr('id'), detailRows );
+ 
+        if ( row.child.isShown() ) {
+            tr.removeClass( 'details' );
+            row.child.hide();
+ 
+            // Remove from the 'open' array
+            detailRows.splice( idx, 1 );
+        }
+        else {
+            tr.addClass( 'details' );
+            row.child( format( row.data() ) ).show();
+ 
+            // Add to the 'open' array
+            if ( idx === -1 ) {
+                detailRows.push( tr.attr('id') );
+            }
+        }
+    } );
+
+	function format ( d ) {
+		//data.date, data.car_number, data.type, data.cost, buttons, data.id, data.client_name, data.client_phone, data.job_desc
+		var client_name = d[d.length - 3];
+		var client_phone = d[d.length - 2];
+		var job_desc = d[d.length - 1];
+		var job_number = d[d.length - 4];
+		var job_type = d[2];
+    	return 'Client\'s name: '+client_name+', Client\'s Number: '+client_phone+'<br>'+'Job Type: '+job_type+'<br>'+'Job Description:<br>'+job_desc+'<br>';
+	}
+
+
+$('#table').DataTable().on( 'draw', function () {
+        $.each( detailRows, function ( i, id ) {
+            $('#'+id+' tr').trigger( 'click' );
+        } );
+    } );
+
+
+	function ResetDB(){
+		var res = $.get('/ResetDB');
+	res.done((res) => {
+		setTimeout(function(){// wait for 5 secs(2)
+           location.reload(); // then reload the page.(3)
+      }, 2000); 
+    });
+	}
+</script>
+
