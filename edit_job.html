@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
 	<title>
 	Garage Inc
@@ -23,17 +24,16 @@
 			cursor: pointer;
 			width: 100%;
 			}
-			form{
-				position:fixed;
-				top:10%;
-				left:20%;
-				width: 60%;
-			}
-		</style>
+
+</style>
 </head>
 <body>
-	<h2>Edit Job</h2>
+		<div class = "container-fluid py-2">
+				<div class="row justify-content-md-center">
+						<div class="col-lg-6 border rounded">
 	<form onsubmit="edit_job()">
+			<h2>Edit Job</h2>
+			<div class=" container-fluid">
 		<div class="form-row">
 			<div class="form-group col-md-6">
 				<label for="car_number">License Plate</label>
@@ -76,7 +76,11 @@
 			<textarea class="form-control" id="job_desc" rows="6" required></textarea>
 		</div>
 		<button id="add_job_btn" type="submit" class="btn btn-primary">Save Changes</button>
+	</div>
 	</form>
+</div>
+</div>
+</div>
 </body>
 </html>
 
