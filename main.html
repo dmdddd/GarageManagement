@@ -19,6 +19,9 @@
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
  
 		<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+		<!-- <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css""> -->
+		
 		<style>
 		</style>
 </head>
@@ -92,9 +95,12 @@
 
 <script>
 $('#table').DataTable( {
+"responsive": true,
 "columnDefs": [
-    { "orderable": false, "targets": 4 }
-  ]
+    { "orderable": false, "targets": 4 },
+		{ "responsivePriority": 2, "targets": -1 },
+		{ "responsivePriority": 1, "targets": 1 }
+	]
   });
 
 	document.addEventListener( "DOMContentLoaded", get_jobs, false );
