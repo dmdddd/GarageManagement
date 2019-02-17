@@ -6,6 +6,7 @@
 	<title>
 	Garage Inc
 	</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 		<!-- jQuery library -->
@@ -15,22 +16,10 @@
 		<!-- Latest compiled JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 		<style>
-		button {
-			background-color: #4CAF50;
-			color: white;
-			padding: 14px 20px;
-			margin: 8px 0;
-			border: none;
-			cursor: pointer;
-			/* width: 100%; */
-		}
-/* .imgcontainer {
-  text-align: center;
-  margin: 24px 0 12px 0;
-} */
 		</style>
 </head>
 <body>
+		<div class="fullscreen_bg"></div>
 		<nav class="navbar sticky-top navbar-expand-lg navbar navbar-dark bg-dark">
 				<a class="navbar-brand" href="/Main">Garage Inc.</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,9 +45,9 @@
 			  </nav>
 
 
-	<div class = "container-fluid py-2">
+	<div class = "container-fluid py-2 px-2">
 			<div class="row justify-content-md-center">
-					<div class="col-lg-6 border rounded">
+					<div class="col-lg-6 border rounded" style="background-color: #fff;">
 
 				<form onsubmit="add_job()">
 					<h1>New Job</h1>
@@ -107,7 +96,7 @@
 			<textarea class="form-control" id="job_desc" rows="6" required></textarea>
 		</div>
 	</div>
-	<button id="add_job_btn" type="submit" class="btn btn-primary">Add Job</button>
+	<button id="add_job_btn" type="submit" class="btn btn-primary" style="margin: 8px 0;">Add Job</button>
 	</form>
 </div>
 </div>

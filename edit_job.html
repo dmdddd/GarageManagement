@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
 	<title>
 	Garage Inc
 	</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 		<!-- jQuery library -->
@@ -15,19 +16,10 @@
 		<!-- Latest compiled JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 		<style>
-			button {
-			background-color: #4CAF50;
-			color: white;
-			padding: 14px 20px;
-			margin: 8px 0;
-			border: none;
-			cursor: pointer;
-			/* width: 100%; */
-			}
-
 </style>
 </head>
 <body>
+		<div class="fullscreen_bg"></div>
 		<nav class="navbar sticky-top navbar-expand-lg navbar navbar-dark bg-dark">
 				<a class="navbar-brand" href="/Main">Garage Inc.</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +46,7 @@
 
 		<div class = "container-fluid py-2">
 				<div class="row justify-content-md-center">
-						<div class="col-lg-6 border rounded">
+						<div class="col-lg-6 border rounded" style="background-color: #fff;">
 	<form onsubmit="edit_job()">
 			<h2>Edit Job</h2>
 			<div class=" container-fluid">
@@ -99,7 +91,7 @@
 			<label for="job_desc">Job Details</label>
 			<textarea class="form-control" id="job_desc" rows="6" required></textarea>
 		</div>
-		<button id="add_job_btn" type="submit" class="btn btn-primary">Save Changes</button>
+		<button id="add_job_btn" type="submit" class="btn btn-primary" style="margin: 8px 0;">Save Changes</button>
 	</div>
 	</form>
 </div>

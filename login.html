@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
     <!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 		<!-- jQuery library -->
@@ -21,29 +22,16 @@ input[type=text], input[type=password] {
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
-button:hover {
-  opacity: 0.8;
-}
-
-
-
-/* .container {
-  border: 3px solid #f1f1f1;
-  position:fixed;
-  top:10%;
-  left:30%;
-  width: 40%;
-} */
-
-
 
 </style>
 </head>
 <body>
+  <div class="fullscreen_bg"></div>
 
 <div class="container-fluid py-2">
   <div class="row justify-content-md-center">
-    <div class="col-lg-4 border rounded">
+    <div class="col-lg-4 border rounded" style="background-color: #fff;">
+
       <form>
         <div class="imgcontainer">
           <h1>Login</h1>
@@ -61,6 +49,9 @@ button:hover {
           <input id="submit-btn" class="btn btn-primary btn-block" type="submit" value="Log In"/>
         </div>
       </form> 
+
+
+
       <div class="w-full text-center p-t-55">
           <span class="txt2">
           Not a member?

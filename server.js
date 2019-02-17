@@ -133,6 +133,10 @@ app.get('/LogOut', (req, res) => {
 	res.sendFile(__dirname + '/login.html');
 });
 
+app.get('/styles.css', (req, res) => {
+	res.sendFile(__dirname + '/styles.css');
+});
+
 app.get('/Users', (req, res) => {
   var users = [];
   admin.firestore().collection("Users").get().then(function(querySnapshot) {
