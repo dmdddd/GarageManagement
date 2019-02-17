@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>
 	Garage Inc
 	</title>
@@ -16,15 +17,15 @@
 
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
  
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
 		<style>
 			button, input[type=submit]{
 			background-color: #4CAF50;
-			color: white;
+			/* color: white; */
 			padding: 14px 20px;
 			margin: 8px 0;
-			border: none;
-			cursor: pointer;
+			/* border: none;
+			cursor: pointer; */
 			}
 			button:hover {
   				opacity: 0.8;
@@ -32,16 +33,31 @@
 		</style>
 </head>
 <body>
-	<h1 id="welcome_message">Welcome, </h1>
-	<div>
-		<form action="/NewJob" method="get">
-			<input type="submit" value="New Job">
-		</form>
-		<button id="resetDB_btn" onclick="ResetDB()" type="button" style="width:100px; background-color: #0000ff9e;">Reset DB</button>
-		<form action="/LogOut" method="get">
-			<input type="submit" value="Log Out">
-		</form>
+<div class="container-fluid">
+	<div class="row justify-content-sm-center">
+	<div class="col-sm">
+	<h3 id="welcome_message">Welcome, </h3>
 	</div>
+	<div class="col-sm-1">
+	<form action="/LogOut" method="get">
+		<input type="submit" class="btn btn-primary btn-block" value="Log Out">
+	</form>
+</div>
+</div>
+
+
+	<div class="row justify-content-sm-center">
+		<div class="col-sm-1">
+			<form action="/NewJob" method="get">
+			<input type="submit" class="btn btn-primary btn-block" value="New Job">
+			</form>
+		</div>
+		<div class="col-sm-1">
+			<button id="resetDB_btn" onclick="ResetDB()" type="button" class="btn btn-primary btn-block" style="background-color: #0000ff9e;">Reset DB</button>
+		</div>
+	</div>
+
+	<div class="row justify-content-sm-center">
 	<div class="container">
 	<table id="table" class="display table table-hover">
 	<thead>
@@ -63,6 +79,7 @@
 		</tr>
 	</tfoot>
 	</div>
+</div>
 	
 </body>
 </html>
