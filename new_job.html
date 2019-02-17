@@ -14,7 +14,7 @@
 		<!-- Latest compiled JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 		<style>
-			button {
+		button {
 			background-color: #4CAF50;
 			color: white;
 			padding: 14px 20px;
@@ -22,17 +22,17 @@
 			border: none;
 			cursor: pointer;
 			width: 100%;
-			}
-			.container {
-  padding: 16px;
-}
-			form {
+		}
+		/* .container {
+ 		 padding: 16px;
+		} */
+			/* form {
   border: 3px solid #f1f1f1;
   position:fixed;
   top:10%;
   left:30%;
   width: 40%;
-}
+} */
 .imgcontainer {
   text-align: center;
   margin: 24px 0 12px 0;
@@ -40,11 +40,13 @@
 		</style>
 </head>
 <body>
-	<form onsubmit="add_job()">
-		  <div class="imgcontainer">
+	<div class = "container  container-fluid">
+			<div class="row">
+					<div class="col-md-12">
+
+				<form onsubmit="add_job()">
 					<h1>New Job</h1>
-				</div>
-				<div class="container">
+				<div class="container container-fluid">
 		<div class="form-row">
 			<div class="form-group col-md-6">
 				<label for="car_number">License Plate</label>
@@ -82,20 +84,23 @@
 			</div>
 		</div>
 
-		<div class="form-group">
+
+
+		<div class="form-row">
 			<label for="job_desc">Job Details</label>
 			<textarea class="form-control" id="job_desc" rows="6" required></textarea>
 		</div>
 		<button id="add_job_btn" type="submit" class="btn btn-primary">Add Job</button>
 	</div>
 	</form>
+</div>
+</div>
+</div>
 
 </body>
 </html>
 
 <script>
-
-
 	function add_job(){
 		var car_number = $('#car_number').val();
 		var car_type = $('#car_type').val();
@@ -141,4 +146,3 @@
     $("#date").attr("value", today);
 });
 </script>
-
