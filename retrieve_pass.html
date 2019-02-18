@@ -30,19 +30,13 @@ body {
     <div class="row justify-content-md-center">
         <div class="col-lg-3 border rounded" style="background-color: #fff; padding:0px;">
 
-      <form onsubmit="register(event)" oninput='pw2.setCustomValidity(pw2.value != pw1.value ? "Passwords do not match." : "")'>
+      <form onsubmit="restore_pass(event)">
       <div class=" container-fluid" style="padding:0px;">
     <div class="form-group col-md-12">
-        <h1>Register</h1>
+        <h1>Restore password</h1>
       <input type="text" class="form-control" id="username" placeholder="Username" required>
       <span id="error_uname_exists" style="color:red; display:none;">User name already exists</span>
     </div>
-    <div class="form-group col-md-12">
-      <input type="password" class="form-control" id="password" placeholder="Password" name="pw1" required>
-    </div>
-    <div class="form-group col-md-12">
-        <input type="password" class="form-control" id="password2" placeholder="Repeat Password" name="pw2" required>
-      </div>
     <div class="form-group col-md-12">
       <input type="text" class="form-control" id="name" placeholder="Full name" required>
     </div>
@@ -50,16 +44,16 @@ body {
       <input type="email" class="form-control" id="email" placeholder="Email" required>
     </div>
     <div class="form-group col-md-12">
-    <div class="row">
-        <div class="col">
-    <button id="register_btn" type="submit" class="btn btn-primary" style="width: 140%; ">Register</button>
-    </div>
-    <div class="col text-right">
-    <input type='button'value='Back' class="btn btn-primary" onclick="document.location.href='/';" style="border-color: #4CAF50; background-color: #4CAF50;"/>
-  </div>
+            <div class="row">
+                <div class="col">
+            <button id="register_btn" type="submit" class="btn btn-primary" style="width: 140%; ">Send Password</button>
+            </div>
+            <div class="col text-right">
+            <input type='button'value='Back' class="btn btn-primary" onclick="document.location.href='/';" style="border-color: #4CAF50; background-color: #4CAF50;"/>
+          </div>
+        </div>
+        </div>
 </div>
-</div>
-  
   </div>
 </form>
 </div>
@@ -73,27 +67,24 @@ body {
 </html>
 
 <script>
-function register(event){
+function restore_pass(event){
   $('#error_uname_exists').hide();
 	var username = $('#username').val();
-	var password = $('#password').val();
 	var name = $('#name').val();
 	var email = $('#email').val();
-
 	var user = {
 		'username': username,
-		'password': password,
 		'email': email,
 		'name': name,
 	}
-  var response = $.post('/Register', user);
+  var response = $.post('/ForgotPassword', user);
     response.done((response) => {
-      if (response.success){
-        sessionStorage.setItem('name', name);
-        window.location.replace(response.message);
+      if (response.sucess){
+        alert(response.message);
+        // window.location.replace(response.message);
       }
       else{
-        $('#error_uname_exists').show();
+        alert(response.message);
       }
   });
   event.preventDefault();

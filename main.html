@@ -53,21 +53,21 @@
 
 <div class="container-fluid">
 	<div class="row justify-content-sm-center">
-	<div class="col-sm">
-	<h3 id="welcome_message">Welcome, </h3>
+	<div class="col-lg-8">
+	<span id="welcome_message" style="color:whitesmoke">Welcome, </span>
 	</div>
 </div>
 
 	<div class="row justify-content-sm-center">
-		<div class="col-sm-1">
+		<div class="col-lg-8">
 			<form action="/NewJob" method="get">
-			<input type="submit" class="btn btn-primary btn-block" value="New Job">
+			<input type="submit" class="btn btn-primary btn-block" value="New Job"">
 			</form>
 		</div>
 	</div>
 
-	<div class="row justify-content-sm-center" >
-	<div class="col-lg-8 border rounded" style="background-color: #fff;">
+	<div class="row justify-content-sm-center py-3">
+	<div class="col-lg-8 border rounded py-3 px-3" style="background-color: #fff;">
 	<table id="table" class="display table table-hover">
 	<thead>
 	<tr>
@@ -96,6 +96,7 @@
 <script>
 $('#table').DataTable( {
 "responsive": true,
+"order": [[ 0, "desc" ]],
 "columnDefs": [
     { "orderable": false, "targets": 4 },
 		{ "responsivePriority": 2, "targets": -1 },
@@ -110,17 +111,23 @@ $('#table').DataTable( {
 		var table = $('#table');
 		$.each(res, function (key, data) {
 			var buttons = '<button type="button" class="btn btn-primary btn-xs my-xs-btn" onclick="editJob(\'' + String(data.id) + '\')">Edit</button> <button type="button" class="rm_btn btn btn-primary btn-xs my-xs-btn" onclick="removeJob(\'' + String(data.id) + '\', this)">Remove</button>';
-			$("table").DataTable().row.add([data.date, data.car_number, data.type, data.cost, buttons, data.id, data.client_name, data.client_phone, data.job_desc]).draw( true );
+			var row = $("table").DataTable().row.add([data.date, data.car_number, data.type, data.cost, buttons, data.id, data.client_name, data.client_phone, data.car_type, data.job_desc]).draw( true );
+			$("table").DataTable().row(row).column(0).nodes().to$().addClass('info');
+			$("table").DataTable().row(row).column(1).nodes().to$().addClass('info');
+			$("table").DataTable().row(row).column(2).nodes().to$().addClass('info');
+			$("table").DataTable().row(row).column(3).nodes().to$().addClass('info');
 		})
     });
 	}
 
 	function editJob(id){
+		event.stopPropagation();
 		sessionStorage.setItem('job_id', id);
 		window.location.href = "/EditJob"
 
 	}
 	function removeJob(id, row){
+		event.stopPropagation();
 		if (confirm('Are you sure you want to delete this job?')) {
 			var json = {
       	'id_to_remove': id
@@ -158,7 +165,7 @@ $( document ).ready(function() {
 var detailRows = [];
 
 
-$('#table').on( 'click', 'td', function () {
+$('#table').on( 'click', 'td.info', function () {
         var tr = $(this).closest('tr');
         var row = $('#table').DataTable().row( tr );
 		var idx = $.inArray( tr.attr('id'), detailRows );
@@ -183,12 +190,14 @@ $('#table').on( 'click', 'td', function () {
 
 	function format ( d ) {
 		//data.date, data.car_number, data.type, data.cost, buttons, data.id, data.client_name, data.client_phone, data.job_desc
-		var client_name = d[d.length - 3];
-		var client_phone = d[d.length - 2];
+		var client_name = d[d.length - 4];
+		var client_phone = d[d.length - 3];
 		var job_desc = d[d.length - 1];
-		var job_number = d[d.length - 4];
+		var job_number = d[d.length - 5];
 		var job_type = d[2];
-    	return 'Client\'s name: '+client_name+', Client\'s Number: '+client_phone+'<br>'+'Job Type: '+job_type+'<br>'+'Job Description:<br>'+job_desc+'<br>';
+		var car_type = d[d.length-2];
+		var car_number = d[1];
+    	return '<b>Client\'s name:</b> '+client_name+'<br><b>Client\'s Number:</b> '+client_phone+'<br><b>Lisence number:</b> ' + car_number +'<br><b>Car type:</b> ' + car_type + '<br>'+'<b>Job Type:</b> '+job_type+'<br>'+'<b>Job Description:</b><br>'+job_desc;
 	}
 
 

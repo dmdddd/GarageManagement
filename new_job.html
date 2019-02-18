@@ -45,7 +45,7 @@
 			  </nav>
 
 
-	<div class = "container-fluid py-2 px-2">
+	<div class = "container-fluid py-3 px-4">
 			<div class="row justify-content-md-center">
 					<div class="col-lg-6 border rounded" style="background-color: #fff;">
 
@@ -96,7 +96,8 @@
 			<textarea class="form-control" id="job_desc" rows="6" required></textarea>
 		</div>
 	</div>
-	<button id="add_job_btn" type="submit" class="btn btn-primary" style="margin: 8px 0;">Add Job</button>
+	<button id="add_job_btn" type="submit" class="btn btn-primary" style="margin: 8px 0; width: 100%;">Add Job</button>
+	<input type='button'value='Back' class="btn btn-primary btn-hover" onclick="document.location.href='/Main';" style="margin: 8px 0;width: 100%; border-color: #4CAF50; background-color: #4CAF50;"/>
 	</form>
 </div>
 </div>
@@ -106,7 +107,7 @@
 </html>
 
 <script>
-	function add_job(){
+function add_job(){
 		var car_number = $('#car_number').val();
 		var car_type = $('#car_type').val();
 		var client_name = $('#client_name').val();

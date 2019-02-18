@@ -4,6 +4,15 @@ let port = process.env.PORT || 3000;
 let app = express();
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded({extended: true})); // to support URL-encoded bodies
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.REC_MAIL,
+    pass: process.env.REC_MAIL_PW
+  }
+});
 
 // Initialize databasse
 var admin = require("firebase-admin");
@@ -129,6 +138,54 @@ app.get('/Register', (req, res) => {
     res.sendFile(__dirname + '/register.html');
 });
 
+app.get('/ForgotPassword', (req, res) => {
+  res.sendFile(__dirname + '/retrieve_pass.html');
+});
+
+app.post('/ForgotPassword', function(req, res){
+  var answer = {'success': false, 'message': 'Error.'};
+  var username = req.body.username;
+  var name = req.body.name;
+  var email = req.body.email;
+  var usersRef = admin.firestore().collection('Users').doc(username);
+  var serDoc = usersRef.get()
+    .then(doc => {
+      if (doc.exists){
+        // user found
+        if (doc.data().name == name && doc.data().email == email){
+          //send password
+          var mailOptions = {
+            from: 'zegarageze@gmail.com',
+            to: email,
+            subject: 'Your password',
+            text: 'Hello ' + name + ', your password is: ' + doc.data().password
+          };
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              answer.message = "Could not send email, please contact support.";
+              res.send(answer);
+            } else {
+              answer.success = true;
+              answer.message = "Email containing your password has been sent to " + email;
+              res.send(answer);
+            }
+          });
+        } else {
+          //wrong name or pw
+          answer.message= "Wrong details provided.";
+          res.send(answer);
+        }
+      } else {
+        answer.message = "Could not find user for username: " + username;
+        res.send(answer);
+      }
+    })
+    .catch(err => {
+      console.log('Error getting document', err);
+    });
+});
+
+
 app.get('/LogOut', (req, res) => {
 	res.sendFile(__dirname + '/login.html');
 });
@@ -195,10 +252,10 @@ app.get('/ResetDB', (req, res) => {
     {'email': "admin@admin.admin", 'name': "Admin user", 'password': "admin", 'username': "admin"},
     {'email': "dan@blabla.com", 'name': "Daniel K", 'password': "123", 'username': "dan"}];
   var new_jobs = [
-    {'car_number': "12-333-43", 'car_type': "Batmobile", 'client_name': "Bruce Wayne", 'client_phone': "0547-456-234", 'type': "Routine Checkup", 'cost': "123", 'date': '15-Feb-2019', 'job_desc': "123"},  
-    {'car_number': "14-654-23", 'car_type': "Tesla", 'client_name': "Elon Musk", 'client_phone': "0547-456-234", 'type': "Sending to Mars", 'cost': "123", 'date': '15-Feb-2019', 'job_desc': "123"},
-    {'car_number': "345-65-234", 'car_type': "Yello Submarine", 'client_name': "The Beatles", 'client_phone': "0547-456-234", 'type': "Fixing", 'cost': "123", 'date': '15-Feb-2019', 'job_desc': "123"},
-    {'car_number': "735-23-245", 'car_type': "Toyota", 'client_name': "Hipster", 'client_phone': "0547-456-234", 'type': "Routine Checkup", 'cost': "123", 'date': '15-Feb-2019', 'job_desc': "123"}];
+    {'car_number': "12-333-43", 'car_type': "Batmobile", 'client_name': "Bruce Wayne", 'client_phone': "0547-456-234", 'type': "Routine Checkup", 'cost': "123", 'date': '2019-02-17', 'job_desc': "123"},  
+    {'car_number': "14-654-23", 'car_type': "Tesla", 'client_name': "Elon Musk", 'client_phone': "0547-456-234", 'type': "Sending to Mars", 'cost': "123", 'date': '2019-02-17', 'job_desc': "123"},
+    {'car_number': "345-65-234", 'car_type': "Yello Submarine", 'client_name': "The Beatles", 'client_phone': "0547-456-234", 'type': "Fixing", 'cost': "123", 'date': '2019-02-17', 'job_desc': "123"},
+    {'car_number': "735-23-245", 'car_type': "Toyota", 'client_name': "Hipster", 'client_phone': "0547-456-234", 'type': "Routine Checkup", 'cost': "123", 'date': '2019-02-17', 'job_desc': "123"}];
 
     // Users
     var usersRef = admin.firestore().collection("Users");
@@ -227,6 +284,18 @@ app.get('/ResetDB', (req, res) => {
     });
     res.send({'success' : true});
 });
+
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+
+  // if user is authenticated in the session, carry on 
+  if (req.isAuthenticated())
+      return next();
+
+  // if they aren't redirect them to the home page
+  res.redirect('/');
+}
+
 
 
 app.listen(port, () => {

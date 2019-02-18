@@ -22,15 +22,20 @@ input[type=text], input[type=password] {
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
-
+.container-fluid {
+  margin:auto;
+}
+body {
+  display:flex;
+}
 </style>
 </head>
 <body>
   <div class="fullscreen_bg"></div>
 
-<div class="container-fluid py-2">
+<div class="container-fluid py-3 px-4">
   <div class="row justify-content-md-center">
-    <div class="col-lg-4 border rounded" style="background-color: #fff;">
+    <div class="col-lg-3 border rounded" style="background-color: #fff;">
 
       <form>
         <div class="imgcontainer">
@@ -60,6 +65,14 @@ input[type=text], input[type=password] {
           Sign up now
           </a>
           </div>
+          <div class="w-full text-center p-t-55">
+              <span class="txt2">
+              Forgot your password?
+              </span>
+              <a href="/ForgotPassword" class="txt2 bo1">
+              Restore it
+              </a>
+              </div>
     </div>
   </div>
 </div>
