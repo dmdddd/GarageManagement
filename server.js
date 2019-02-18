@@ -13,22 +13,14 @@ var transporter = nodemailer.createTransport({
     pass: process.env.REC_MAIL_PW
   }
 });
-console.log(process.env.FIREBASE_PRIVATE_KEY);
+
 // Initialize databasse
 var admin = require("firebase-admin");
+var serviceAccount = require(__dirname + "/serviceAccountKey.json");
 admin.initializeApp({
-  credential: admin.credential.cert({
-    "private_key": process.env.FIREBASE_PRIVATE_KEY,
-    "client_email": process.env.FIREBASE_CLIENT_EMAIL,
-	  "project_id": process.env.FIREBASE_PROJECT_ID,
-  }),
+  credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://garageinc-fe238.firebaseio.com"
 });
-// var serviceAccount = require(__dirname + "/serviceAccountKey.json");
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL: "https://garageinc-fe238.firebaseio.com"
-// });
 
 app.get('/', (req, res) => {
 	res.sendFile(__dirname + '/login.html');
