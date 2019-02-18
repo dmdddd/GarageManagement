@@ -18,9 +18,8 @@ var transporter = nodemailer.createTransport({
 var admin = require("firebase-admin");
 admin.initializeApp({
   credential: admin.credential.cert({
-    "private_key": process.env.FIREBASE_PRIVATE_KEY,
-    "private_key_id": process.env.FIREBASE_PRIVATE_KEY_ID,
-    "client_email": process.env.FIREBASE_CLIENT_EMAIL,
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC/57u7hsMcHdI+\n9VeRCoGhO2FPvDhx58AAhHyv94PzB/Hw1rGfTai5rmezw8pe9ZBPWwJGO7GhZBG+\nTNuu0Exu7QrMKWO2RIUCCbF8+8BDm3FGfhrFGxkwhtLWReUd3OXKsyGPGSoGfYwa\n+Plxk1YyEryG67JyYLOTzfrFGrcxg3xSWJZZZzzP/YLgUWxUeLUJVkfUEEd9+crw\nIpZowGOGOuQ2cDCdA55gBNnPDmtYq8YJsfG+5nAeP/Pq6zc7n7MvuHSd5FKIApQw\nduXdbysMM2Q9HFdYEQp9lVnJJmBYJC6A9QPepdDcyI8EZgfiEO2iquCJMUbu0nw1\nRPwQJbMBAgMBAAECggEAC2oDFoJLdI6phKkfDjdrwmU/wnhVeyDnoKBAsk6sgHYG\ng+ahJfJ+iJzA+kY48TD15mJpXjgKtqi3DXSQ1HL7ONXMgJwtnBezOY3OCrsGkn7a\nW/EAMp0MAIDkZW4+1GnhGQ9Sfapnf39UJ/6LB6BVziCjKfs23+q0g6QKuFKAduda\nqhUAsvcwf2wlnS3F6bEakIVFuxI4iCYaCumCvRNIeqBOD51Pfojbp8PF0Q7rKTib\ni1Xtxkt27ldAtCHWxKM/WpTa8WZmZhCVzDhV8JJoYWa8wBbUcZWhd4hTe1ErG3Dd\nfMEelh1xkhSsL90AAL7jP8qh3kIIosGDlNUvastv4QKBgQD1pHAd8cvNMVL33/Hh\nEcCJltGRoSUVs0u5zJNwaxsV5vTDACSDOA50AWiPuYQrFQmA7Wew6yCG3O/ph/D4\n1QpdA6RyA0XWGawH6bpiWkTHrZVftVEO5TurKI4n5AP6ob+Z3scW3006ZrFlXopH\nOG+xKgoCIXB5uw0zL+IE2bh+FQKBgQDH/zw4Tuu5ysHa5/uD8LDMHMIJDs0CnO3C\nQz5kNkGBxhoVIhvstwcl3N/2OohEMgxZmtBrXqjNa/04yxoaP5JQ7e+oWaTvdmrI\n6CfycWkcUnWu97s5L1Cj85SXc5sUXf8eLmu0CsV/PmHiBvqg5IwW3FSTvYfeW22n\nLQD2bQMIPQKBgQDM8t34nf2EvlqTJe4R81XJdmR0NRdT+7x60Q1TBooaxBADguLz\n+JlWgLZU9Fwp9etv/qQ9IHCLFVu2ZQ3RDy8OXDOgTMq/z7uQ/pnb5aTtVQ8EQ6vV\n2bznGXdCISSQwNOz9gP2OWmeCICKK08EDTpjfsfK70uAxWhGBPV3RpB/4QKBgF+D\nmvv9XQDfP5PPRMRvd9ATT+vJgMllrvse6DYt3z0eIijDoHh9tNE1WlSbAacoC9Pj\nZvRQQefRUh8EiJPOlo9GAzXwkh+2+yq2DRXxadSX4RJNx8F4wld6phVqpb6lYYjF\nfLSAjG/HmDG9SYb7f5gPY+knFDNykLzNdm86Ar+1AoGBAOXHF5eeIV5daENTC+5A\nCVtRhDQN9feaSNUG3qHs1y28W/afxj4FblSIoXVcbCdR0QtNb3gGZwePD6Pr56S6\n36+xiZB3JrdePvDNKhVa+KF2eezrqxpNTKD/cTxQthhR3L1pUWLB+qTyM8aCUX92\nDLFX1k1qK6VpNdAITFxgZ84+\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-wh1ru@garageinc-fe238.iam.gserviceaccount.com",
   }),
   databaseURL: "https://garageinc-fe238.firebaseio.com"
 });
