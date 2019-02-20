@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Garage Inc - Login</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
+    <!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<!-- Popper JS -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+.container-fluid {
+  margin:auto;
+}
+body {
+  display:flex;
+}
+</style>
+</head>
+<body>
+  <div class="fullscreen_bg"></div>
+
+<div class="container-fluid px-4">
+  <div class="row justify-content-md-center">
+    <div class="col-lg-3 border rounded" style="background-color: #fff;">
+
+      <form>
+        <div class="imgcontainer">
+          <h1>Login</h1>
+        </div>
+        <div class="form-row">
+          <input id="name" class="form-control" type="text" placeholder="Username" name="uname" required>
+          <span id="no_username" class="error" style="color:red; display:none;">Username field is empty</span><br>
+        </div>
+        <div class="form-row">
+          <input id="password" class="form-control" type="password" placeholder="Password" name="upassword" autocomplete="on" required>
+          <span id="no_pw" class="error" style="color:red; display:none;">Password field is empty</span>
+          <span id="wrong_details" class="error" style="color:red; display:none;">Username or password are incorrect</span>
+        </div>
+        <div class="form-row">
+          <input id="submit-btn" class="btn btn-primary btn-block" type="submit" value="Log In"/>
+        </div>
+      </form> 
+
+
+
+      <div class="w-full text-center p-t-55">
+          <span class="txt2">
+          Not a member?
+          </span>
+          <a href="/Register" class="txt2 bo1">
+          Sign up now
+          </a>
+          </div>
+          <div class="w-full text-center p-t-55">
+              <span class="txt2">
+              Forgot your password?
+              </span>
+              <a href="/ForgotPassword" class="txt2 bo1">
+              Restore it
+              </a>
+              </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+    function HandleServerResponse(res){
+      //res.success for successful login
+      alert(res.message); 
+    }
+
+  $('#submit-btn').on('click', Login);
+  
+function Login(ev){
+  $('.error').hide();
+ ev.preventDefault();
+  var name = $('#name').val();
+  var pass = $('#password').val();
+  var json = {
+    'name': name,
+    'password': pass
+  }
+  if (name == ""){
+    $('#no_username').show();
+} else if (pass == "") {
+  $('#no_pw').show();
+  } else {
+    var response = $.post('/Login', json);
+    response.done((response) => {
+        if (response.success){
+          sessionStorage.setItem('name', response.name);
+          window.location.replace(response.message);
+        }
+        else{
+          $('#wrong_details').show();
+        }
+    });
+  }
+}
+</script>
+</body>
+</html>

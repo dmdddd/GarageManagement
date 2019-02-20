@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>
+	Garage Inc
+	</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<!-- Popper JS -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+		<style>
+</style>
+</head>
+<body>
+		<div class="fullscreen_bg"></div>
+		<nav class="navbar sticky-top navbar-expand-lg navbar navbar-dark bg-dark">
+				<a class="navbar-brand" href="/Main">Garage Inc.</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+				  <span class="navbar-toggler-icon"></span>
+				</button>
+			  
+				<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+				  <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+					<!-- <li class="nav-item active">
+					  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link" href="#">Link</a>
+					</li> -->
+					<li class="nav-item">
+					  <a id="reset_db" class="nav-link" href="#">ResetDB</a>
+					</li>
+				  </ul>
+				  <form class="form-inline my-2 my-lg-0" form action="/LogOut" method="get">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log Out</button>
+				  </form>
+				</div>
+			  </nav>
+
+		<div class = "container-fluid py-3 px-4">
+				<div class="row justify-content-md-center">
+						<div class="col-lg-6 border rounded" style="background-color: #fff;">
+	<form onsubmit="edit_job()">
+			<h2>Edit Job</h2>
+			<div class=" container-fluid">
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="car_number">License Plate</label>
+				<input type="text" class="form-control" id="car_number" placeholder="XX-XXX-XX or YYY-YYY-YYY" required>
+			</div>
+			<div class="form-group col-md-6">
+				<label for="car_type">Car Type</label>
+				<input type="text" class="form-control" id="car_type" placeholder="Batmobile" required>
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="client_name">Client's Name</label>
+				<input type="text" class="form-control" id="client_name" placeholder="Kal-El" required>
+			</div>
+			<div class="form-group col-md-6">
+				<label for="client_phone">Client's Phone Number</label>
+				<input type="tel" class="form-control" id="client_phone" placeholder="054x-xxx-xxx" required>
+			</div>
+		</div>
+
+		<div class="form-row">
+				<div class="form-group col-md-4">
+						<label for="cost">Job Type</label>
+						<input type="text" class="form-control" id="type" placeholder="Routine Check" required>
+					</div>
+			<div class="form-group col-md-4">
+				<label for="cost">Cost</label>
+				<input type="number" min="0.00" max="10000.00" step="0.01" class="form-control" id="cost" required>
+			</div>
+			<div class="form-group col-md-4">
+				<label for="date">Date</label>
+				<input type="date" min="2000-01-02" class="form-control" id="date" required>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="job_desc">Job Details</label>
+			<textarea class="form-control" id="job_desc" rows="6" required></textarea>
+		</div>
+		<button id="add_job_btn" type="submit" class="btn btn-primary" style="margin: 8px 0;width: 100%;">Save Changes</button>
+		<input type='button'value='Back' class="btn btn-primary btn-hover" onclick="document.location.href='/Main';" style="margin: 8px 0;width: 100%; border-color: #4CAF50; background-color: #4CAF50;"/>
+	</div>
+	</form>
+</div>
+</div>
+</div>
+</body>
+</html>
+
+<script>
+
+
+	function edit_job(){
+
+        if (confirm('Are you sure you want to update this job?')) {
+            var car_number = $('#car_number').val();
+		var car_type = $('#car_type').val();
+		var client_name = $('#client_name').val();
+		var client_phone = $('#client_phone').val();
+		var job_desc = $('#job_desc').val();
+		var cost = $('#cost').val();
+		var date = $('#date').val();
+		var type = $('#type').val();
+
+		var updated_job = {
+            'job_id' : sessionStorage .getItem("job_id"),
+            'car_number': car_number,
+            'car_type': car_type,
+			'client_name': client_name,
+			'client_phone': client_phone,
+			'job_desc': job_desc,
+			'date': date,
+			'cost': cost,
+			'type': type
+		}
+		var response = $.post('/SaveJobChanges', updated_job);
+            response.done((response) => {
+                if (response.success){
+				window.location.replace(response.redirect);
+			} else {
+				alert(response.message);
+			}
+		});
+		} else {
+			return false;
+		}
+	}
+
+
+	$(document).ready( function() {
+        var id = sessionStorage .getItem("job_id");
+        var json = {'job_id': id};
+        var job_details = $.post('/GetJobById', json);
+        job_details.done((response) => {
+            $("#job_desc").text(response.job_desc);
+            $("#type").attr("value", response.type);
+            $("#date").attr("value", response.date);
+            $("#car_type").attr("value", response.car_type);
+            $("#cost").attr("value", response.cost);
+            $("#car_number").attr("value", response.car_number);
+            $("#client_name").attr("value", response.client_name);
+            $("#client_phone").attr("value", response.client_phone);
+		});
+});
+</script>
+
