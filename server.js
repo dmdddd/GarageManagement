@@ -66,6 +66,9 @@ app.get('/styles.css', (req, res) => {
 	res.sendFile(__dirname + '/styles.css');
 });
 
+app.get('/LogOut', (req, res) => {
+	res.sendFile(__dirname + '/users/login.html');
+});
 //=============================================
 // User requests
 //=============================================
@@ -157,10 +160,6 @@ app.post('/ForgotPassword', function(req, res){
     .catch(err => {
       console.log('Error getting document', err);
     });
-});
-
-app.get('/LogOut', (req, res) => {
-	res.sendFile(__dirname + '/login.html');
 });
 
 //=============================================
